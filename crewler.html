@@ -1,0 +1,466 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Learn Web Crawling - MyAIBrain</title>
+
+    <link rel="stylesheet"
+          href="https://www.w3schools.com/w3css/6/w3.css">
+
+    <!-- Python running in the browser -->
+    <script src="https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.js"></script>
+</head>
+
+<body class="w3-light-grey">
+
+    <!-- Sidebar -->
+    <nav class="w3-sidebar w3-bar-block w3-black"
+         style="width:200px">
+    <!-- Main content -->
+    <div style="margin-left:200px">
+
+        <header id="home" class="w3-container w3-green w3-padding-32">
+            <h1>Learn Web Crawling with Python</h1>
+            <p>Discover how programs visit pages, find links, and collect information.</p>
+        </header>
+
+        <main class="w3-container w3-padding-16">
+
+            <!-- What is a crawler -->
+            <section id="what" class="w3-container w3-white w3-card w3-padding-24 w3-margin-bottom">
+
+                <h2>1. What Is a Web Crawler?</h2>
+
+                <p>
+                    A web crawler is a computer program that automatically visits
+                    web pages and collects information from them.
+                </p>
+
+                <p>
+                    Imagine opening a website, reading its page, clicking a link,
+                    reading the next page, and repeating those actions. A crawler
+                    performs a similar process automatically, following rules
+                    written by its programmer.
+                </p>
+
+                <p>
+                    Crawlers are used by search engines, research tools, website
+                    monitoring systems, and data collection applications.
+                </p>
+
+                <h3>Example</h3>
+
+                <p>
+                    Imagine a website about artificial intelligence with pages
+                    about Python, neural networks, and tokenizers.
+                    A crawler could visit the home page, find links to those
+                    topics, and collect their titles.
+                </p>
+
+                <div class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+                    <b>Simple definition:</b>
+                    A crawler discovers pages and visits them automatically.
+                    A scraper is a program that extracts specific information
+                    from a page. One program can do both jobs.
+                </div>
+
+            </section>
+
+            <!-- How crawler works -->
+            <section id="how" class="w3-container w3-white w3-card w3-padding-24 w3-margin-bottom">
+
+                <h2>2. How Does a Crawler Work?</h2>
+
+                <h3>Step 1: Start with a URL</h3>
+
+                <p>
+                    A URL is a web address, such as
+                    <code>https://example.com/</code>. The crawler needs a starting
+                    address so it knows where to begin.
+                </p>
+
+                <h3>Step 2: Put the URL in a queue</h3>
+
+                <p>
+                    A queue is a collection of tasks waiting to be processed.
+                    The crawler places the starting URL in its queue.
+                </p>
+
+                <h3>Step 3: Visit a page</h3>
+
+                <p>
+                    The crawler requests a page and receives its response.
+                    For a real website, this requires an HTTP request and a
+                    successful response from the server.
+                </p>
+
+                <h3>Step 4: Read the page</h3>
+
+                <p>
+                    A crawler can examine the page's HTML, which describes
+                    its structure. It may extract the page title, headings,
+                    text, and links.
+                </p>
+
+                <h3>Step 5: Discover links</h3>
+
+                <p>
+                    If the page links to other pages, the crawler can add those
+                    URLs to its queue. It should check whether each URL has
+                    already been visited to avoid repeating work.
+                </p>
+
+                <h3>Step 6: Repeat within limits</h3>
+
+                <p>
+                    The crawler repeats the process until the queue is empty
+                    or a limit is reached. Limits help control how many pages
+                    it visits and how much time and memory it uses.
+                </p>
+
+                <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                    <b>The crawler cycle:</b>
+                    <p>Starting URL → Queue → Visit page → Extract information → Find links → Repeat</p>
+                </div>
+
+            </section>
+
+            <!-- Python code example -->
+            <section id="code" class="w3-container w3-white w3-card w3-padding-24 w3-margin-bottom">
+
+                <h2>3. A Simple Python Crawler</h2>
+
+                <p>
+                    Before connecting to the internet, let's build a small crawler
+                    that operates on sample pages stored in Python.
+                </p>
+
+                <p>
+                    This lets you understand the crawler's queue, visited-page
+                    tracking, link discovery, and page limits without sending
+                    requests to external websites.
+                </p>
+
+                <pre class="w3-code pythonHigh">from collections import deque
+
+pages = {
+    "home": {
+        "title": "MyAIBrain Home",
+        "links": ["python", "ai"]
+    },
+    "python": {
+        "title": "Learn Python",
+        "links": ["neural"]
+    },
+    "ai": {
+        "title": "Introduction to AI",
+        "links": ["neural"]
+    },
+    "neural": {
+        "title": "Neural Networks",
+        "links": []
+    }
+}
+
+def crawl(start_url, max_pages=10):
+    queue = deque([start_url])
+    visited = set()
+
+    while queue and len(visited) < max_pages:
+        url = queue.popleft()
+
+        if url in visited:
+            continue
+
+        if url not in pages:
+            continue
+
+        visited.add(url)
+        page = pages[url]
+
+        print("Visited:", url)
+        print("Title:", page["title"])
+
+        for link in page["links"]:
+            if link not in visited:
+                queue.append(link)
+
+        print()
+
+crawl("home")</pre>
+
+                <h3>What does each part do?</h3>
+
+                <p>
+                    <code>from collections import deque</code> imports a queue
+                    structure. A queue lets the crawler process pages in the
+                    order they were discovered.
+                </p>
+
+                <p>
+                    <code>pages</code> represents a tiny website. Each entry has
+                    a title and a list of links. These are sample data, not actual
+                    internet pages.
+                </p>
+
+                <p>
+                    <code>queue = deque([start_url])</code> adds the first page
+                    to the queue. The crawler starts with the page named
+                    <code>home</code>.
+                </p>
+
+                <p>
+                    <code>visited = set()</code> creates an empty set for pages
+                    already visited. A set helps the crawler avoid processing
+                    the same page again and again.
+                </p>
+
+                <p>
+                    <code>while queue</code> repeats the process while pages
+                    remain waiting in the queue. The maximum-page condition
+                    prevents the crawler from exceeding its configured limit.
+                </p>
+
+                <p>
+                    <code>queue.popleft()</code> removes the next URL from the
+                    front of the queue.
+                </p>
+
+                <p>
+                    <code>page["title"]</code> retrieves the title from the
+                    sample page, and <code>page["links"]</code> retrieves its
+                    outgoing links.
+                </p>
+
+                <p>
+                    Finally, the crawler adds newly discovered links to the
+                    queue. If two pages link to the same destination, the
+                    visited set helps prevent duplicate visits.
+                </p>
+
+                <div class="w3-panel w3-pale-yellow w3-leftbar w3-border-yellow">
+                    <b>Important:</b>
+                    This first example is a simulated crawler. It does not
+                    download web pages. It teaches the core crawling algorithm
+                    before we add real HTTP requests and HTML parsing.
+                </div>
+
+            </section>
+
+            <!-- Try it yourself -->
+            <section id="tryit" class="w3-container w3-white w3-card w3-padding-24 w3-margin-bottom">
+
+                <h2>4. Try It Yourself</h2>
+
+                <p>
+                    Edit the Python crawler below and run it. Change page titles,
+                    add links, change the starting page, or set a smaller page limit.
+                </p>
+
+                <label for="crawlerCode"><b>Your crawler code:</b></label>
+
+                <textarea id="crawlerCode"
+                    class="w3-input w3-border w3-light-grey"
+                    style="width:100%;height:420px;font-family:monospace;white-space:pre;overflow:auto;">from collections import deque
+
+pages = {
+    "home": {
+        "title": "MyAIBrain Home",
+        "links": ["python", "ai"]
+    },
+    "python": {
+        "title": "Learn Python",
+        "links": ["neural"]
+    },
+    "ai": {
+        "title": "Introduction to AI",
+        "links": ["neural"]
+    },
+    "neural": {
+        "title": "Neural Networks",
+        "links": []
+    }
+}
+
+def crawl(start_url, max_pages=10):
+    queue = deque([start_url])
+    visited = set()
+
+    while queue and len(visited) < max_pages:
+        url = queue.popleft()
+
+        if url in visited:
+            continue
+
+        if url not in pages:
+            print("Page not found:", url)
+            continue
+
+        visited.add(url)
+        page = pages[url]
+
+        print("Visited:", url)
+        print("Title:", page["title"])
+
+        for link in page["links"]:
+            if link not in visited and link not in queue:
+                queue.append(link)
+
+        print()
+
+    print("Total pages visited:", len(visited))
+
+crawl("home", max_pages=10)</textarea>
+
+                <div class="w3-section">
+                    <button id="runCrawler" class="w3-button w3-green w3-round">
+                        Run Crawler
+                    </button>
+
+                    <button id="resetCrawler" class="w3-button w3-grey w3-round">
+                        Reset Code
+                    </button>
+                </div>
+
+                <p id="crawlerStatus" class="w3-text-blue">
+                    Click Run Crawler to start Python.
+                </p>
+
+                <h3>Output</h3>
+
+                <pre id="crawlerOutput" class="w3-code"
+                     style="min-height:100px;white-space:pre-wrap;overflow-wrap:anywhere;">Your crawler output will appear here.</pre>
+
+                <h3>Experiments to try</h3>
+
+                <ol>
+                    <li>Change <code>"MyAIBrain Home"</code> to another title.</li>
+                    <li>Add a new sample page to the <code>pages</code> dictionary.</li>
+                    <li>Add the new page's name to another page's <code>links</code> list.</li>
+                    <li>Change <code>crawl("home", max_pages=10)</code> to <code>crawl("python", max_pages=2)</code>.</li>
+                    <li>Run the program again and compare the output.</li>
+                </ol>
+
+                <p>
+                    Each experiment shows how the starting point, discovered links,
+                    and page limit influence which pages the crawler visits.
+                </p>
+
+            </section>
+
+            <!-- Real websites -->
+            <section id="realweb" class="w3-container w3-white w3-card w3-padding-24 w3-margin-bottom">
+
+                <h2>5. How to Crawl Real Websites</h2>
+
+                <p>
+                    A real crawler needs to request web pages over HTTP, examine
+                    the returned HTML, extract links, and convert relative links
+                    into complete URLs.
+                </p>
+
+                <p>
+                    Python libraries such as <code>requests</code> and
+                    <code>BeautifulSoup</code> are commonly used for these tasks.
+                    The browser playground above does not install or use those
+                    libraries; it runs the simulated crawler only.
+                </p>
+
+                <h3>Important rules for real crawlers</h3>
+
+                <ul class="w3-ul w3-border">
+                    <li>Check a website's terms and crawling policies.</li>
+                    <li>Respect its <code>robots.txt</code> guidance.</li>
+                    <li>Make requests slowly and avoid overloading servers.</li>
+                    <li>Use page limits and timeouts.</li>
+                    <li>Do not attempt to bypass logins, access controls, or blocks.</li>
+                    <li>Collect only information you have a legitimate reason to use.</li>
+                </ul>
+
+                <h3>What is robots.txt?</h3>
+
+                <p>
+                    A website may publish a file at a path such as
+                    <code>/robots.txt</code>. It gives automated crawlers guidance
+                    about which parts of the site the site owner requests they
+                    should or should not crawl.
+                </p>
+
+                <p>
+                    It is crawler guidance, not a way to grant access to private
+                    information or override a website's terms and security controls.
+                </p>
+
+            </section>
+
+        </main>
+
+        <footer class="w3-container w3-dark-grey w3-center w3-padding-16">
+            <p>MyAIBrain | Learn Python and Web Crawling</p>
+            <p>&copy; 2026 MyAIBrain</p>
+            <p>Created by ovenseri blessed</p>
+        </footer>
+
+    </div>
+
+    <script>
+        let pyodide = null;
+        let loading = false;
+
+        const codeBox = document.getElementById("crawlerCode");
+        const outputBox = document.getElementById("crawlerOutput");
+        const statusBox = document.getElementById("crawlerStatus");
+        const runButton = document.getElementById("runCrawler");
+        const resetButton = document.getElementById("resetCrawler");
+
+        const starterCode = codeBox.value;
+
+        async function runCrawler() {
+            if (loading) return;
+
+            loading = true;
+            runButton.disabled = true;
+            outputBox.textContent = "";
+            statusBox.textContent = "Loading Python and running crawler...";
+
+            try {
+                if (!pyodide) {
+                    pyodide = await loadPyodide();
+                }
+
+                // Capture Python print output in the output area.
+                pyodide.setStdout({
+                    batched: (text) => {
+                        outputBox.textContent += text + "\n";
+                    }
+                });
+
+                await pyodide.runPythonAsync(codeBox.value);
+
+                statusBox.textContent = "Crawler finished successfully.";
+                if (!outputBox.textContent.trim()) {
+                    outputBox.textContent = "The program finished without printing output.";
+                }
+            } catch (error) {
+                statusBox.textContent = "There is an error in your Python code.";
+                outputBox.textContent += String(error);
+            } finally {
+                loading = false;
+                runButton.disabled = false;
+            }
+        }
+
+        runButton.addEventListener("click", runCrawler);
+
+        resetButton.addEventListener("click", () => {
+            codeBox.value = starterCode;
+            outputBox.textContent = "Code reset. Click Run Crawler to run it.";
+            statusBox.textContent = "Starter code restored.";
+        });
+    </script>
+
+</body>
+</html>

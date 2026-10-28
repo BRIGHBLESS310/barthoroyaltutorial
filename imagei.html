@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How AI Image Generation Works - MyAIBrain</title>
+  <link rel="stylesheet"
+        href="https://www.w3schools.com/w3css/4/w3.css">
+
+  <style>
+    body { background: #f4f7fb; font-family: Arial, sans-serif; }
+    .sidebar {
+      width: 200px;
+      position: fixed;
+      height: 100%;
+      background: #111827;
+      color: white;
+      overflow-y: auto;
+    }
+    .sidebar a { display: block; padding: 12px 16px; color: white; text-decoration: none; }
+    .sidebar a:hover { background: #374151; }
+    .main { margin-left: 200px; padding: 24px; }
+    .content { max-width: 950px; margin: auto; }
+    .step { padding: 18px; margin: 14px 0; border-radius: 8px; }
+    textarea { width: 100%; min-height: 110px; padding: 12px; }
+    #generatedImage { max-width: 100%; display: none; margin-top: 20px; }
+    code { background: #e5e7eb; padding: 3px 6px; border-radius: 4px; }
+    @media (max-width: 700px) {
+      .sidebar { width: 100%; height: auto; position: relative; }
+      .main { margin-left: 0; padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <h3 class="w3-padding">MyAIBrain</h3>
+  <a href="index.html">Home</a>
+  <a href="brain.html">AI Brain</a>
+  <a href="tokenizer.html">Tokenizers</a>
+  <a href="text_generation.html">Text Generation</a>
+  <a href="image_generation.html">Image Generation</a>
+  <a href="ai_tools.html">AI Tools</a>
+</nav>
+
+<main class="main">
+<div class="content">
+
+  <header class="w3-container w3-blue w3-round-large w3-padding-24">
+    <h1>How AI Image Generation Works</h1>
+    <p>Learn how artificial intelligence turns words into pictures.</p>
+  </header>
+
+  <section class="w3-container w3-white w3-padding-16 w3-margin-top w3-round">
+    <h2>1. What is AI image generation?</h2>
+    <p>
+      AI image generation is a technology that creates a new image
+      from a written description called a <strong>prompt</strong>.
+    </p>
+    <p>For example, you could type:</p>
+    <blockquote>
+      Generate an image of a blue dragon flying above a castle
+      at sunset, fantasy digital art.
+    </blockquote>
+    <p>
+      An image-generation model uses patterns learned during training
+      to create an image that matches your description as closely as it can.
+      It does not simply search for an existing picture.
+    </p>
+  </section>
+
+  <section class="w3-container w3-white w3-padding-16 w3-margin-top w3-round">
+    <h2>2. How does it work?</h2>
+
+    <div class="step w3-pale-blue">
+      <h3>Step 1: Write a prompt</h3>
+      <p>
+        You describe the subject, background, colors, lighting and
+        artistic style you want.
+      </p>
+      <p><strong>Example:</strong> A golden dragon in a snowy mountain.</p>
+    </div>
+
+    <div class="step w3-pale-green">
+      <h3>Step 2: Understand the text</h3>
+      <p>
+        The system converts the prompt into a numerical representation
+        that its neural network can process. This is often called
+        text encoding.
+      </p>
+      <p>
+        A tokenizer may split the words into smaller units called tokens.
+        The text encoder then represents their meaning as numbers.
+      </p>
+    </div>
+
+    <div class="step w3-pale-yellow">
+      <h3>Step 3: Start with noise</h3>
+      <p>
+        Many modern image generators use a technique called diffusion.
+        During generation, the model starts with a random noisy image
+        representation.
+      </p>
+    </div>
+
+    <div class="step w3-pale-red">
+      <h3>Step 4: Refine the image</h3>
+      <p>
+        The model repeatedly estimates and removes noise while using
+        the prompt as guidance. Gradually, a recognisable image forms.
+      </p>
+    </div>
+
+    <div class="step w3-light-grey">
+      <h3>Step 5: Display the result</h3>
+      <p>
+        The final image representation is decoded into pixels and
+        returned to the website for display or download.
+      </p>
+    </div>
+
+    <p class="w3-small w3-text-grey">
+      This describes a common diffusion-based approach. Not every
+      image-generation model uses exactly the same process.
+    </p>
+  </section>
+
+  <section class="w3-container w3-white w3-padding-16 w3-margin-top w3-round">
+    <h2>3. Example: Improving a prompt</h2>
+
+    <p><strong>Simple prompt:</strong></p>
+    <blockquote>A dragon.</blockquote>
+
+    <p><strong>More detailed prompt:</strong></p>
+    <blockquote>
+      A large emerald-green dragon standing on a mountain cliff,
+      golden eyes, clouds below, sunset lighting, detailed fantasy
+      illustration, cinematic composition.
+    </blockquote>
+
+    <p>
+      The detailed prompt gives the model more information about
+      the subject, colors, setting and style. However, results can
+      still vary, and the model may not follow every detail perfectly.
+    </p>
+  </section>
+
+  <section id="try-it" class="w3-container w3-white w3-padding-16
+                             w3-margin-top w3-round">
+    <h2>4. Try It Yourself</h2>
+    <p>
+      Enter a description, choose an example, and send it to an
+      external image-generation service.
+    </p>
+
+    <label for="prompt"><strong>Your image prompt:</strong></label>
+    <textarea id="prompt" class="w3-round"
+      placeholder="Generate an image of a dragon flying over a castle..."></textarea>
+
+    <p><strong>Try these examples:</strong></p>
+    <button class="w3-button w3-light-grey w3-round w3-margin-bottom"
+      onclick="setPrompt('A red dragon flying over a medieval castle at sunset, fantasy illustration')">
+      Dragon
+    </button>
+    <button class="w3-button w3-light-grey w3-round w3-margin-bottom"
+      onclick="setPrompt('A futuristic city with flying cars and glowing skyscrapers, science fiction art')">
+      Future city
+    </button>
+    <button class="w3-button w3-light-grey w3-round w3-margin-bottom"
+      onclick="setPrompt('A cute orange cat sitting in a flower garden, colourful storybook illustration')">
+      Cat
+    </button>
+
+    <button id="generateButton"
+      class="w3-button w3-blue w3-block w3-large w3-round"
+      onclick="generateImage()">
+      Generate Image
+    </button>
+
+    <p id="status" role="status" class="w3-padding-16">
+      Your result will appear here.
+    </p>
+
+    <img id="generatedImage" alt="Generated image">
+
+    <p class="w3-small w3-text-grey">
+      This demonstration sends your prompt to AI Horde, a community
+      service powered by volunteer computers. Internet access is
+      required. Anonymous requests may take a long time or fail.
+      Avoid entering private information.
+    </p>
+  </section>
+
+  <section class="w3-container w3-white w3-padding-16 w3-margin-top w3-round">
+    <h2>5. How is this different from MyAIBrain?</h2>
+    <p>
+      This demonstration uses an external service to generate images.
+      It does not train an image model on your computer.
+    </p>
+    <p>
+      To generate images locally, MyAIBrain would need an image model,
+      suitable model weights, a generation pipeline and enough computer
+      memory. That is a separate project from building a text tokenizer
+      or a small text-generating neural network.
+    </p>
+  </section>
+
+</div>
+</main>
+
+<script>
+  const API = "https://aihorde.net/api/v2";
+  const ANON_KEY = "0000000000";
+  let currentImageUrl = "";
+
+  function setPrompt(text) {
+    document.getElementById("prompt").value = text;
+  }
+
+  async function generateImage() {
+    const prompt = document.getElementById("prompt").value.trim();
+    const status = document.getElementById("status");
+    const button = document.getElementById("generateButton");
+    const image = document.getElementById("generatedImage");
+
+    if (!prompt) {
+      status.textContent = "Please type an image description first.";
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Generating...";
+    image.style.display = "none";
+    currentImageUrl = "";
+
+    const headers = {
+      "Content-Type": "application/json",
+      "apikey": ANON_KEY,
+      "Client-Agent": "MyAIBrain:1.0:ImageGenerationLesson"
+    };
+
+    try {
+      status.textContent = "Submitting your prompt...";
+
+      const startResponse = await fetch(API + "/generate/async", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          prompt,
+          params: {
+            width: 512,
+            height: 512,
+            steps: 20,
+            n: 1
+          },
+          nsfw: false,
+          censor_nsfw: true,
+          r2: true
+        })
+      });
+
+      if (!startResponse.ok) {
+        throw new Error("Request failed with HTTP " + startResponse.status);
+      }
+
+      const startData = await startResponse.json();
+      if (!startData.id) throw new Error("No generation ID was returned.");
+
+      const jobId = startData.id;
+      const deadline = Date.now() + 5 * 60 * 1000;
+      let finished = false;
+
+      while (Date.now() < deadline) {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
+        const checkResponse = await fetch(
+          API + "/generate/check/" + encodeURIComponent(jobId),
+          { headers }
+        );
+
+        if (!checkResponse.ok) {
+          throw new Error("Could not check the queue.");
+        }
+
+        const check = await checkResponse.json();
+
+        status.textContent =
+          "Waiting for a volunteer computer...\n" +
+          "Jobs waiting: " + (check.waiting ?? "unknown");
+
+        if (check.faulted) throw new Error("The generation failed.");
+        if (check.done) {
+          finished = true;
+          break;
+        }
+      }
+
+      if (!finished) {
+        throw new Error("Timed out. The free queue may be busy; try later.");
+      }
+
+      status.textContent = "Retrieving the image...";
+
+      const resultResponse = await fetch(
+        API + "/generate/status/" + encodeURIComponent(jobId),
+        { headers }
+      );
+
+      if (!resultResponse.ok) {
+        throw new Error("Could not retrieve the result.");
+      }
+
+      const resultData = await resultResponse.json();
+      const generated = resultData.generations || [];
+
+      if (!generated.length || !generated[0].img) {
+        throw new Error("The service returned no image.");
+      }
+
+      currentImageUrl = generated[0].img;
+
+      image.onload = () => {
+        image.style.display = "block";
+        status.textContent = "Image received successfully!";
+      };
+
+      image.onerror = () => {
+        status.textContent =
+          "The image URL could not be displayed. Please try again.";
+      };
+
+      image.src = currentImageUrl;
+
+    } catch (error) {
+      console.error(error);
+      status.textContent =
+        "Image generation did not work: " + error.message +
+        "\n\nIf this is a network or CORS error, the browser may not " +
+        "be allowed to contact the service directly. We can connect " +
+        "a small backend if needed.";
+    } finally {
+      button.disabled = false;
+      button.textContent = "Generate Image";
+    }
+  }
+</script>
+
+</body>
+</html>

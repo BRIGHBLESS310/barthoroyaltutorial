@@ -1,0 +1,474 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Python for Beginners | MyAIBrain</title>
+
+    <link rel="stylesheet"
+          href="https://www.w3schools.com/w3css/6/w3.css">
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.js"></script>
+
+    <style>
+        .editor {
+            width: 100%;
+            min-height: 230px;
+            background: #1e1e1e;
+            color: #d4f7d4;
+            padding: 16px;
+            font-family: Consolas, monospace;
+            font-size: 16px;
+            border: 1px solid #555;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .output {
+            background: #111;
+            color: #8df58d;
+            padding: 16px;
+            min-height: 100px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .lesson {
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+
+<body class="w3-light-grey">
+
+    <!-- HEADER -->
+    <header class="w3-container w3-green w3-padding-32">
+        <div class="w3-content">
+            <h1>Python for Beginners</h1>
+            <p>Learn Python from zero and begin building your AI brain.</p>
+            <a href="#playground"
+               class="w3-button w3-white w3-round">
+                Start Coding
+            </a>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="w3-bar w3-black">
+        <a href="#lessons" class="w3-bar-item w3-button">Lessons</a>
+        <a href="#playground" class="w3-bar-item w3-button">Code Editor</a>
+        <a href="#practice" class="w3-bar-item w3-button">Practice</a>
+        <a href="#next" class="w3-bar-item w3-button">Next Step</a>
+    </nav>
+
+    <main class="w3-content" style="max-width:1100px">
+
+        <!-- INTRODUCTION -->
+        <section class="w3-container w3-white w3-card lesson w3-padding-24">
+            <h2>Welcome to Python!</h2>
+
+            <p>
+                Python is a programming language used to build websites,
+                automate tasks, analyze data, and create AI models.
+            </p>
+
+            <p>
+                You do not need to know everything at once.
+                Read a lesson, try the code, and experiment.
+            </p>
+
+            <div class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+                <strong>Our goal:</strong> Learn the Python basics before
+                moving to neural networks, tokenizers, and MyAIBrain.
+            </div>
+        </section>
+
+        <!-- LESSONS -->
+        <section id="lessons" class="w3-container lesson">
+            <h2 class="w3-center">Python Basics</h2>
+
+            <div class="w3-row-padding">
+
+                <div class="w3-third w3-margin-bottom">
+                    <div class="w3-card w3-white w3-padding">
+                        <h3>1. Print</h3>
+                        <p>Display text and results on the screen.</p>
+                        <pre class="w3-code">print("Hello!")</pre>
+                        <button class="w3-button w3-green w3-block"
+                                onclick="loadExample('print')">
+                            Try Example
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w3-third w3-margin-bottom">
+                    <div class="w3-card w3-white w3-padding">
+                        <h3>2. Variables</h3>
+                        <p>Store information using variable names.</p>
+                        <pre class="w3-code">name = "Alex"
+print(name)</pre>
+                        <button class="w3-button w3-green w3-block"
+                                onclick="loadExample('variables')">
+                            Try Example
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w3-third w3-margin-bottom">
+                    <div class="w3-card w3-white w3-padding">
+                        <h3>3. Mathematics</h3>
+                        <p>Add, subtract, multiply, and divide numbers.</p>
+                        <pre class="w3-code">print(10 + 5)</pre>
+                        <button class="w3-button w3-green w3-block"
+                                onclick="loadExample('math')">
+                            Try Example
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w3-third w3-margin-bottom">
+                    <div class="w3-card w3-white w3-padding">
+                        <h3>4. Conditions</h3>
+                        <p>Make decisions using if and else.</p>
+                        <pre class="w3-code">if 10 > 5:
+    print("Yes")</pre>
+                        <button class="w3-button w3-green w3-block"
+                                onclick="loadExample('conditions')">
+                            Try Example
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w3-third w3-margin-bottom">
+                    <div class="w3-card w3-white w3-padding">
+                        <h3>5. Loops</h3>
+                        <p>Repeat instructions automatically.</p>
+                        <pre class="w3-code">for i in range(3):
+    print(i)</pre>
+                        <button class="w3-button w3-green w3-block"
+                                onclick="loadExample('loops')">
+                            Try Example
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w3-third w3-margin-bottom">
+                    <div class="w3-card w3-white w3-padding">
+                        <h3>6. Functions</h3>
+                        <p>Organize reusable pieces of code.</p>
+                        <pre class="w3-code">def greet():
+    print("Hello!")</pre>
+                        <button class="w3-button w3-green w3-block"
+                                onclick="loadExample('functions')">
+                            Try Example
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w3-third w3-margin-bottom">
+                    <div class="w3-card w3-white w3-padding">
+                        <h3>7. Lists</h3>
+                        <p>Store several values in one collection.</p>
+                        <pre class="w3-code">names = ["Ada", "Sam"]
+print(names[0])</pre>
+                        <button class="w3-button w3-green w3-block"
+                                onclick="loadExample('lists')">
+                            Try Example
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w3-third w3-margin-bottom">
+                    <div class="w3-card w3-white w3-padding">
+                        <h3>8. User Input</h3>
+                        <p>Learn how programs receive information.</p>
+                        <pre class="w3-code">name = input("Name: ")
+print(name)</pre>
+                        <button class="w3-button w3-green w3-block"
+                                onclick="loadExample('input')">
+                            Try Example
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w3-third w3-margin-bottom">
+                    <div class="w3-card w3-white w3-padding">
+                        <h3>9. Dictionaries</h3>
+                        <p>Store information using keys and values.</p>
+                        <pre class="w3-code">person = {"name": "Ada"}
+print(person["name"])</pre>
+                        <button class="w3-button w3-green w3-block"
+                                onclick="loadExample('dictionaries')">
+                            Try Example
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PLAYGROUND -->
+        <section id="playground"
+                 class="w3-container w3-white w3-card lesson w3-padding-24">
+
+            <h2>Python Playground</h2>
+            <p>Write Python code below and click Run Code.</p>
+
+            <label for="codeEditor"><strong>Your code</strong></label>
+
+            <textarea id="codeEditor"
+                      class="editor"
+                      spellcheck="false">print("Hello, World!")
+print("Welcome to MyAIBrain!")
+
+name = "Python learner"
+age = 15
+
+print("Name:", name)
+print("Age:", age)</textarea>
+
+            <button id="runButton"
+                    class="w3-button w3-green w3-round w3-margin-top"
+                    onclick="runCode()" disabled>
+                Run Code
+            </button>
+
+            <button class="w3-button w3-dark-grey w3-round w3-margin-top"
+                    onclick="resetCode()">
+                Reset
+            </button>
+
+            <button class="w3-button w3-blue w3-round w3-margin-top"
+                    onclick="clearOutput()">
+                Clear Output
+            </button>
+
+            <h3>Program Output</h3>
+            <pre id="output" class="output">Loading Python runtime...</pre>
+            <p id="status" role="status" aria-live="polite">
+                Preparing Python...
+            </p>
+        </section>
+
+        <!-- PRACTICE -->
+        <section id="practice"
+                 class="w3-container w3-white w3-card lesson w3-padding-24">
+
+            <h2>Practice Challenges</h2>
+            <p>Try these challenges by writing code in the editor.</p>
+
+            <ol class="w3-ol">
+                <li>Print your name on the screen.</li>
+                <li>Create two number variables and print their sum.</li>
+                <li>Use an if statement to check whether a number is positive.</li>
+                <li>Use a loop to print numbers from 1 to 10.</li>
+                <li>Write a function that adds two numbers.</li>
+                <li>Create a list of five favourite foods and print each item.</li>
+                <li>Create a dictionary containing a person's name and age.</li>
+            </ol>
+
+            <button class="w3-button w3-green"
+                    onclick="loadExample('challenge')">
+                Load Challenge 1
+            </button>
+        </section>
+
+        <!-- RUN PYTHON LOCALLY -->
+        <section class="w3-container w3-white w3-card lesson w3-padding-24">
+            <h2>Run Python on Your Computer</h2>
+
+            <ol class="w3-ol">
+                <li>Install Python from the official Python website.</li>
+                <li>Open VS Code and create a file named <code>first_program.py</code>.</li>
+                <li>Write your Python code and save it.</li>
+                <li>Open the VS Code terminal.</li>
+                <li>Run the command below.</li>
+            </ol>
+
+            <pre class="w3-code">python first_program.py</pre>
+
+            <p>
+                If the command does not work on Windows, try
+                <code>py first_program.py</code>.
+            </p>
+        </section>
+
+        <!-- AI NEXT STEP -->
+        <section id="next"
+                 class="w3-container w3-blue w3-center w3-padding-32 lesson">
+
+            <h2>Ready to Build Your AI Brain?</h2>
+
+            <p>
+                After learning Python basics, explore tokenizers,
+                neural networks, training, and text generation.
+            </p>
+
+            <a href="ai.html"
+               class="w3-button w3-black w3-round-large">
+                Continue to AI Lessons
+            </a>
+        </section>
+
+    </main>
+
+    <footer class="w3-container w3-dark-grey w3-center w3-padding-24">
+        <p>MyAIBrain | Python Learning Playground</p>
+        <p>&copy; 2026 MyAIBrain. All rights reserved.</p>
+        <p>Created by Ovenseri Blessed</p>
+    </footer>
+
+    <script>
+        let pyodide = null;
+        let isRunning = false;
+
+        const editor = document.getElementById("codeEditor");
+        const output = document.getElementById("output");
+        const status = document.getElementById("status");
+        const runButton = document.getElementById("runButton");
+
+        const startingCode = editor.value;
+
+        const examples = {
+            print: `print("Hello, Python!")
+print("I am learning to code.")`,
+
+            variables: `name = "Alex"
+age = 16
+
+print("Name:", name)
+print("Age:", age)`,
+
+            math: `a = 10
+b = 5
+
+print("Addition:", a + b)
+print("Subtraction:", a - b)
+print("Multiplication:", a * b)
+print("Division:", a / b)`,
+
+            conditions: `number = 10
+
+if number > 0:
+    print("The number is positive.")
+elif number < 0:
+    print("The number is negative.")
+else:
+    print("The number is zero.")`,
+
+            loops: `for number in range(1, 6):
+    print("Number:", number)`,
+
+            functions: `def add(a, b):
+    return a + b
+
+answer = add(10, 5)
+print("The answer is:", answer)`,
+
+            lists: `foods = ["Rice", "Beans", "Yam", "Bread"]
+
+for food in foods:
+    print(food)`,
+
+            input: `# Enter your name below when prompted.
+name = input("What is your name? ")
+print("Hello,", name)`,
+
+            dictionaries: `person = {
+    "name": "Ada",
+    "age": 20,
+    "language": "Python"
+}
+
+print("Name:", person["name"])
+print("Age:", person["age"])
+print("Language:", person["language"])`,
+
+            challenge: `# Challenge 1: Print your name.
+# Replace "Your Name" with your own name.
+
+name = "Your Name"
+print(name)`
+        };
+
+        async function initializePython() {
+            try {
+                pyodide = await loadPyodide();
+
+                pyodide.setStdout({
+                    batched(text) {
+                        output.textContent += text + "\n";
+                    }
+                });
+
+                pyodide.setStderr({
+                    batched(text) {
+                        output.textContent += text + "\n";
+                    }
+                });
+
+                output.textContent = "Python is ready!";
+                status.textContent = "Ready. Write some code and run it.";
+                runButton.disabled = false;
+
+            } catch (error) {
+                output.textContent = String(error);
+                status.textContent =
+                    "Python could not load. Check your internet connection and reload.";
+            }
+        }
+
+        async function runCode() {
+            if (!pyodide || isRunning) return;
+
+            isRunning = true;
+            runButton.disabled = true;
+            output.textContent = "";
+            status.textContent = "Running...";
+
+            try {
+                await pyodide.runPythonAsync(editor.value);
+
+                if (!output.textContent) {
+                    output.textContent = "Finished. No output was printed.";
+                }
+
+                status.textContent = "Program finished.";
+
+            } catch (error) {
+                output.textContent += "Error:\n" + String(error);
+                status.textContent = "Check your code and try again.";
+
+            } finally {
+                isRunning = false;
+                runButton.disabled = !pyodide;
+            }
+        }
+
+        function loadExample(name) {
+            if (examples[name]) {
+                editor.value = examples[name];
+                document.getElementById("playground").scrollIntoView({
+                    behavior: "smooth"
+                });
+            }
+        }
+
+        function resetCode() {
+            editor.value = startingCode;
+        }
+
+        function clearOutput() {
+            output.textContent = "";
+            status.textContent = "Output cleared.";
+        }
+
+        initializePython();
+    </script>
+
+</body>
+</html>

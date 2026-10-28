@@ -1,0 +1,453 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyAIBrain - AI Tools</title>
+
+    <link rel="stylesheet"
+          href="https://www.w3schools.com/w3css/6/w3.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 22px;
+            margin: 22px 0;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .result {
+            background: #f1f5f9;
+            padding: 14px;
+            margin-top: 12px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        #generatedImage {
+            width: 100%;
+            max-width: 800px;
+            display: none;
+            margin-top: 18px;
+            border-radius: 8px;
+        }
+
+        .example-button {
+            margin: 4px;
+        }
+
+        .loading {
+            color: #075985;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="w3-light-grey">
+
+<header class="w3-container w3-blue w3-padding-24">
+    <h1>MyAIBrain AI Tools</h1>
+    <p>Explore tools and try them yourself.</p>
+</header>
+
+<main class="w3-content" style="max-width:1100px">
+
+    <!-- IMAGE GENERATOR -->
+    <section class="tool-card">
+        <h2>🎨 AI Image Generator</h2>
+
+        <p>
+            Describe an image or generate one from a random idea.
+            The online image service must be reachable for generation to work.
+        </p>
+
+        <label for="imagePrompt">Describe the image</label>
+        <textarea id="imagePrompt" class="w3-input w3-border" rows="3">A beautiful mountain lake at sunset, a cozy wooden cabin, colorful wildflowers, cinematic lighting, highly detailed digital art</textarea>
+
+        <h4>Try an example</h4>
+
+        <button class="w3-button w3-light-blue example-button"
+            onclick="usePrompt('A cute orange cat exploring a magical garden, colorful storybook illustration')">
+            🐈 Cat
+        </button>
+
+        <button class="w3-button w3-light-blue example-button"
+            onclick="usePrompt('A futuristic city at night, glowing neon lights, flying cars, cinematic science fiction art')">
+            🌆 Future City
+        </button>
+
+        <button class="w3-button w3-light-blue example-button"
+            onclick="usePrompt('A fantasy castle on floating islands above the clouds, waterfalls, golden sunlight, detailed fantasy art')">
+            🏰 Fantasy Castle
+        </button>
+
+        <button class="w3-button w3-light-blue example-button"
+            onclick="usePrompt('A photorealistic African savanna at sunrise, elephants near a river, warm golden light, wildlife photography')">
+            🐘 Wildlife
+        </button>
+
+        <p>
+            <button class="w3-button w3-green w3-large"
+                onclick="generateRandomImage()">
+                🎲 Generate Random Image
+            </button>
+
+            <button class="w3-button w3-blue w3-large"
+                onclick="generateCustomImage()">
+                Generate My Prompt
+            </button>
+        </p>
+
+        <div id="imageStatus" class="result" aria-live="polite">
+            Choose an example or generate a random image.
+        </div>
+
+        <img id="generatedImage" alt="Generated image">
+
+        <p id="imageError" class="w3-text-red"></p>
+
+        <p class="w3-small w3-text-grey">
+            Image generation uses the external Pollinations image service.
+            Results and availability depend on that service. A generated
+            image may take some time to load.
+        </p>
+    </section>
+
+    <!-- CALCULATOR -->
+    <section class="tool-card">
+        <h2>🧮 Calculator Tool</h2>
+        <p>Try addition, subtraction, multiplication, or division.</p>
+
+        <div class="w3-row-padding">
+            <div class="w3-half">
+                <label for="numA">First number</label>
+                <input id="numA" class="w3-input w3-border"
+                       type="number" value="125">
+            </div>
+
+            <div class="w3-half">
+                <label for="numB">Second number</label>
+                <input id="numB" class="w3-input w3-border"
+                       type="number" value="48">
+            </div>
+        </div>
+
+        <label for="mathOperation">Operation</label>
+        <select id="mathOperation" class="w3-select w3-border">
+            <option value="add">Add (+)</option>
+            <option value="subtract">Subtract (-)</option>
+            <option value="multiply" selected>Multiply (×)</option>
+            <option value="divide">Divide (÷)</option>
+        </select>
+
+        <button class="w3-button w3-blue w3-margin-top"
+                onclick="calculate()">
+            Calculate
+        </button>
+
+        <div id="calcResult" class="result">Your answer appears here.</div>
+    </section>
+
+    <!-- TEXT ANALYZER -->
+    <section class="tool-card">
+        <h2>📝 Text Analysis Tool</h2>
+        <p>Count words, characters, and lines in any text.</p>
+
+        <textarea id="textInput" class="w3-input w3-border"
+                  rows="4">MyAIBrain is learning about artificial intelligence.
+A tokenizer converts text into tokens.</textarea>
+
+        <button class="w3-button w3-blue w3-margin-top"
+                onclick="analyzeText()">
+            Analyze Text
+        </button>
+
+        <div id="textResult" class="result">
+            Your analysis appears here.
+        </div>
+    </section>
+
+    <!-- KNOWLEDGE SEARCH -->
+    <section class="tool-card">
+        <h2>🔎 Knowledge Search</h2>
+        <p>This demo searches a small collection of built-in notes.</p>
+
+        <input id="knowledgeQuery" class="w3-input w3-border"
+               value="What is a tokenizer?">
+
+        <button class="w3-button w3-blue w3-margin-top"
+                onclick="searchKnowledge()">
+            Search Knowledge
+        </button>
+
+        <div id="knowledgeResult" class="result">
+            Search results appear here.
+        </div>
+    </section>
+
+    <!-- TOOL SELECTION -->
+    <section class="tool-card">
+        <h2>🤖 AI Tool Selection Demo</h2>
+        <p>
+            Try a request. This simple demo selects a tool using keywords;
+            it is not a real language model.
+        </p>
+
+        <textarea id="taskInput" class="w3-input w3-border" rows="2">Make an image of a robot in space.</textarea>
+
+        <button class="w3-button w3-blue w3-margin-top"
+                onclick="chooseTool()">
+            Choose Tool
+        </button>
+
+        <div id="toolResult" class="result">
+            The selected tool appears here.
+        </div>
+    </section>
+
+    <footer class="w3-center w3-padding-32">
+        <p>MyAIBrain — Learn by trying.</p>
+    </footer>
+
+</main>
+
+<script>
+    // RANDOM IMAGE IDEAS
+    const randomPrompts = [
+        "A beautiful mountain lake at sunset, wildflowers, cozy wooden cabin, cinematic digital art",
+        "A friendly robot exploring an ancient library, warm light, highly detailed illustration",
+        "A fantasy dragon flying above a medieval castle, dramatic clouds, epic fantasy artwork",
+        "A futuristic African city with glowing skyscrapers at night, science fiction concept art",
+        "A cute red panda sitting in a magical forest, colorful flowers, whimsical illustration",
+        "A peaceful tropical beach with turquoise water and palm trees, beautiful travel photography",
+        "An astronaut discovering a glowing alien garden on a distant planet, science fiction art",
+        "A majestic lion standing on a rocky hill at sunrise, wildlife photography",
+        "A tiny cottage inside a giant mushroom forest, magical fantasy illustration",
+        "A colorful underwater world with coral reefs and tropical fish, detailed digital art"
+    ];
+
+    let imageRequestNumber = 0;
+
+    function usePrompt(prompt) {
+        document.getElementById("imagePrompt").value = prompt;
+        generateCustomImage();
+    }
+
+    function generateRandomImage() {
+        const prompt = randomPrompts[
+            Math.floor(Math.random() * randomPrompts.length)
+        ];
+
+        document.getElementById("imagePrompt").value = prompt;
+        generateImage(prompt);
+    }
+
+    function generateCustomImage() {
+        const prompt = document.getElementById("imagePrompt")
+            .value.trim();
+
+        if (!prompt) {
+            document.getElementById("imageStatus").textContent =
+                "Please type an image description first.";
+            return;
+        }
+
+        generateImage(prompt);
+    }
+
+    function generateImage(prompt) {
+        const image = document.getElementById("generatedImage");
+        const status = document.getElementById("imageStatus");
+        const error = document.getElementById("imageError");
+
+        imageRequestNumber++;
+        const requestNumber = imageRequestNumber;
+
+        image.style.display = "none";
+        image.removeAttribute("src");
+        error.textContent = "";
+
+        status.className = "result loading";
+        status.textContent =
+            "Generating your image... Please wait.\n\nPrompt: " + prompt;
+
+        /*
+          This sends the prompt to an online image-generation service.
+          It does not generate images locally in your browser.
+        */
+        const imageURL =
+            "https://image.pollinations.ai/prompt/" +
+            encodeURIComponent(prompt) +
+            "?width=768&height=512&nologo=true&seed=" +
+            Math.floor(Math.random() * 1000000000);
+
+        image.onload = function () {
+            if (requestNumber !== imageRequestNumber) return;
+
+            image.style.display = "block";
+            status.className = "result";
+            status.textContent =
+                "Image loaded successfully!\n\nPrompt: " + prompt;
+        };
+
+        image.onerror = function () {
+            if (requestNumber !== imageRequestNumber) return;
+
+            image.style.display = "none";
+            status.className = "result";
+            status.textContent =
+                "The image could not be loaded.";
+
+            error.textContent =
+                "The image service may be unavailable, blocked, or " +
+                "unable to process this request. Check your internet " +
+                "connection and try again later. No image was generated " +
+                "successfully, so this page will not pretend otherwise.";
+        };
+
+        image.src = imageURL;
+    }
+
+    // CALCULATOR
+    function calculate() {
+        const aText = document.getElementById("numA").value;
+        const bText = document.getElementById("numB").value;
+        const a = Number(aText);
+        const b = Number(bText);
+        const operation = document.getElementById("mathOperation").value;
+        const result = document.getElementById("calcResult");
+
+        if (aText.trim() === "" || bText.trim() === "") {
+            result.textContent = "Enter both numbers.";
+            return;
+        }
+
+        let answer;
+
+        if (operation === "add") answer = a + b;
+        if (operation === "subtract") answer = a - b;
+        if (operation === "multiply") answer = a * b;
+
+        if (operation === "divide") {
+            if (b === 0) {
+                result.textContent = "You cannot divide by zero.";
+                return;
+            }
+            answer = a / b;
+        }
+
+        result.textContent = "Answer: " + answer;
+    }
+
+    // TEXT ANALYSIS
+    function analyzeText() {
+        const text = document.getElementById("textInput").value;
+        const words = text.trim() ? text.trim().split(/\s+/) : [];
+        const characters = text.length;
+        const lines = text ? text.split(/\r\n|\r|\n/).length : 0;
+
+        document.getElementById("textResult").textContent =
+            "Words: " + words.length +
+            "\nCharacters (including spaces): " + characters +
+            "\nCharacters (excluding whitespace): " +
+                text.replace(/\s/g, "").length +
+            "\nLines: " + lines;
+    }
+
+    // SAMPLE KNOWLEDGE BASE
+    const knowledgeBase = [
+        {
+            title: "Tokenizer",
+            content: "A tokenizer splits text into tokens and maps tokens to numerical IDs."
+        },
+        {
+            title: "Neural network",
+            content: "A neural network learns patterns by adjusting weights in connected layers."
+        },
+        {
+            title: "Training",
+            content: "Training uses examples, a loss function, and an optimizer to improve a model."
+        },
+        {
+            title: "Web crawler",
+            content: "A web crawler visits web pages and discovers links to other pages."
+        },
+        {
+            title: "Transformer",
+            content: "A Transformer is a neural network architecture that uses attention to process tokens."
+        }
+    ];
+
+    function searchKnowledge() {
+        const query = document.getElementById("knowledgeQuery")
+            .value.toLowerCase().trim();
+
+        const result = document.getElementById("knowledgeResult");
+
+        if (!query) {
+            result.textContent = "Type a topic to search for.";
+            return;
+        }
+
+        const terms = query.split(/\s+/);
+
+        const matches = knowledgeBase.map(doc => {
+            const fullText = (doc.title + " " + doc.content).toLowerCase();
+            const score = terms.filter(term =>
+                fullText.includes(term)
+            ).length;
+
+            return { ...doc, score };
+        }).filter(doc => doc.score > 0)
+          .sort((a, b) => b.score - a.score);
+
+        result.textContent = matches.length
+            ? matches.map(doc =>
+                doc.title + "\n" + doc.content
+              ).join("\n\n")
+            : "No matching notes found.";
+    }
+
+    // SIMPLE TOOL SELECTION
+    function chooseTool() {
+        const task = document.getElementById("taskInput")
+            .value.toLowerCase();
+
+        const result = document.getElementById("toolResult");
+
+        if (!task.trim()) {
+            result.textContent = "Enter a task first.";
+            return;
+        }
+
+        let tool;
+
+        if (/image|picture|draw|illustration/.test(task)) {
+            tool = "Image Generation";
+        } else if (/calculate|multiply|divide|math|plus|minus/.test(task)) {
+            tool = "Calculator";
+        } else if (/search|latest|news|internet|website/.test(task)) {
+            tool = "Web Search";
+        } else if (/count|analyze|analyse|characters|words/.test(task)) {
+            tool = "Text Analysis";
+        } else if (/tokenizer|neural network|transformer|training/.test(task)) {
+            tool = "Knowledge Search";
+        } else {
+            tool = "Language Model";
+        }
+
+        result.textContent =
+            "Selected tool: " + tool +
+            "\n\nThis is a keyword-based demonstration, not a real AI brain.";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Tutorial - Build Your First AI Brain</title>
+
+    <link rel="stylesheet"
+          href="https://www.w3schools.com/w3css/6/w3.css">
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.js"></script>
+
+    <style>
+        .python-editor {
+            width: 100%;
+            min-height: 350px;
+            padding: 16px;
+            background: #17202a;
+            color: #b9f6ca;
+            font-family: Consolas, monospace;
+            font-size: 15px;
+            border: 1px solid #555;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .chat-box {
+            height: 320px;
+            overflow-y: auto;
+            background: #f1f1f1;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .chat-message {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .user-message {
+            background: #d9edff;
+            text-align: right;
+        }
+
+        .ai-message {
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        .output-box {
+            background: #101820;
+            color: #8df58d;
+            padding: 12px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body class="w3-light-grey">
+
+    <!-- INTRODUCTION -->
+    <header class="w3-container w3-green w3-padding-32">
+        <div class="w3-content">
+            <h1>Welcome to the AI Tutorial</h1>
+            <p>Learn how to create your first AI brain using Python.</p>
+        </div>
+    </header>
+
+    <main class="w3-content" style="max-width:1000px">
+
+        <!-- FIRST PROGRAM -->
+        <section class="w3-container w3-white w3-card w3-padding-24 w3-margin-top">
+            <h2>Creating Your First AI Brain</h2>
+
+            <p>
+                First, create a file called <code>first_brain.py</code>.
+                This simple program responds to questions using predefined rules.
+            </p>
+
+            <pre class="w3-code">print("Hello, World!")
+print("Welcome to AI!")
+print("This is my first AI brain!")</pre>
+
+            <p>Save the file and run it in your terminal:</p>
+
+            <pre class="w3-code">python first_brain.py</pre>
+        </section>
+
+        <!-- TRY IT YOURSELF -->
+        <section class="w3-container w3-white w3-card w3-padding-24 w3-margin-top">
+
+            <h2>Try It Yourself: Build a Tiny AI Brain</h2>
+
+            <p>
+                Edit the Python code, click <strong>Run AI Brain</strong>,
+                and then ask your chatbot questions below.
+            </p>
+
+            <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <strong>How it works:</strong>
+                You write the chatbot's rules in Python. The browser runs
+                your code, and the chat box sends your questions to it.
+            </div>
+
+            <label for="brainCode">
+                <strong>Your Python AI Brain</strong>
+            </label>
+
+            <textarea id="brainCode"
+                      class="python-editor"
+                      spellcheck="false">def answer(user_input):
+    question = user_input.lower().strip()
+
+    if question == "hello" or question == "hi":
+        return "Hello! Welcome to my tiny AI brain!"
+
+    elif question == "what is your name?":
+        return "I am MyAIBrain, created by a Python learner."
+
+    elif question == "what is ai?":
+        return "AI stands for Artificial Intelligence. It helps computers perform tasks that usually require human intelligence."
+
+    elif question == "what is machine learning?":
+        return "Machine learning helps computers learn patterns from data."
+
+    elif question == "what is a neural network?":
+        return "A neural network is a computing model made of connected mathematical units that can learn patterns."
+
+    elif question == "how are you?":
+        return "I am a program running in your browser. Thanks for asking!"
+
+    elif question == "bye":
+        return "Goodbye! Come back soon."
+
+    else:
+        return "I do not know that answer yet. Teach me by adding a new rule to my Python code!"</textarea>
+
+            <button id="runBrain"
+                    class="w3-button w3-green w3-round w3-margin-top"
+                    onclick="runBrain()"
+                    disabled>
+                Loading Python...
+            </button>
+
+            <button class="w3-button w3-dark-grey w3-round w3-margin-top"
+                    onclick="resetBrain()">
+                Reset Code
+            </button>
+
+            <h3>Program Status</h3>
+
+            <pre id="brainOutput" class="output-box">Preparing Python runtime...</pre>
+
+            <hr>
+
+            <!-- CHAT INTERFACE -->
+            <h3>Chat With Your AI Brain</h3>
+
+            <div id="chatBox" class="chat-box" aria-live="polite">
+                <div class="chat-message ai-message">
+                    <strong>MyAIBrain:</strong>
+                    Hello! Run your Python brain, then ask me a question.
+                </div>
+            </div>
+
+            <label for="questionInput" class="w3-margin-top">
+                <strong>Your question</strong>
+            </label>
+
+            <input id="questionInput"
+                   class="w3-input w3-border"
+                   type="text"
+                   placeholder="Try: What is AI?"
+                   autocomplete="off">
+
+            <button id="askButton"
+                    class="w3-button w3-blue w3-round w3-margin-top"
+                    onclick="askBrain()"
+                    disabled>
+                Ask AI
+            </button>
+
+            <button class="w3-button w3-grey w3-round w3-margin-top"
+                    onclick="clearChat()">
+                Clear Chat
+            </button>
+
+            <p class="w3-small w3-text-grey">
+                Tip: Try asking "hello", "what is AI?", or
+                "what is a neural network?"
+            </p>
+        </section>
+
+        <!-- HOW TO EXTEND -->
+        <section class="w3-container w3-white w3-card w3-padding-24 w3-margin-top">
+            <h2>How to Teach Your AI a New Answer</h2>
+
+            <p>
+                Add another rule inside the <code>answer()</code> function.
+                For example, insert this before the final <code>else</code>:
+            </p>
+
+            <pre class="w3-code">elif question == "what is python?":
+    return "Python is a programming language."</pre>
+
+            <p>
+                Click <strong>Run AI Brain</strong> again to load your changes,
+                then ask: <code>What is Python?</code>
+            </p>
+        </section>
+
+        <!-- NEXT PAGE -->
+        <section class="w3-container w3-blue w3-center w3-padding-32 w3-margin-top w3-margin-bottom">
+            <h2>Ready for the Next Step?</h2>
+            <p>Continue learning about AI and Python.</p>
+
+            <a href="next.html"
+               class="w3-button w3-black w3-round">
+                Next Lesson
+            </a>
+        </section>
+
+    </main>
+
+    <footer class="w3-container w3-dark-grey w3-center w3-padding-16">
+        <p>MyAIBrain | AI Tutorial</p>
+        <p>&copy; 2026 MyAIBrain. All rights reserved.</p>
+        <p>Created by Ovenseri Blessed</p>
+    </footer>
+
+    <script>
+        let pyodide = null;
+        let brainReady = false;
+        let isRunning = false;
+
+        const brainCode = document.getElementById("brainCode");
+        const brainOutput = document.getElementById("brainOutput");
+        const runButton = document.getElementById("runBrain");
+        const askButton = document.getElementById("askButton");
+        const questionInput = document.getElementById("questionInput");
+        const chatBox = document.getElementById("chatBox");
+
+        const originalCode = brainCode.value;
+
+        async function initializePython() {
+            try {
+                pyodide = await loadPyodide();
+
+                runButton.disabled = false;
+                runButton.textContent = "Run AI Brain";
+
+                brainOutput.textContent =
+                    "Python is ready. Click Run AI Brain to begin.";
+
+            } catch (error) {
+                brainOutput.textContent =
+                    "Could not load Python. Check your internet connection and reload.";
+                runButton.textContent = "Python unavailable";
+            }
+        }
+
+        async function runBrain() {
+            if (!pyodide || isRunning) return;
+
+            isRunning = true;
+            brainReady = false;
+            runButton.disabled = true;
+            askButton.disabled = true;
+
+            brainOutput.textContent = "Running your Python code...";
+
+            try {
+                await pyodide.runPythonAsync(brainCode.value);
+
+                const answerFunction = pyodide.globals.get("answer");
+
+                if (typeof answerFunction !== "function") {
+                    throw new Error(
+                        'Your code must define a function named answer(user_input).'
+                    );
+                }
+
+                answerFunction.destroy();
+
+                brainReady = true;
+
+                brainOutput.textContent =
+                    "Success! Your AI brain is running.\nYou can now ask questions below.";
+
+                askButton.disabled = false;
+                questionInput.focus();
+
+            } catch (error) {
+                brainOutput.textContent =
+                    "Python error:\n" + String(error) +
+                    "\n\nCheck your code and try again.";
+
+            } finally {
+                isRunning = false;
+                runButton.disabled = false;
+            }
+        }
+
+        function addMessage(sender, message, isUser) {
+            const bubble = document.createElement("div");
+
+            bubble.className = "chat-message " +
+                (isUser ? "user-message" : "ai-message");
+
+            const title = document.createElement("strong");
+            title.textContent = sender + ": ";
+
+            bubble.appendChild(title);
+            bubble.appendChild(document.createTextNode(message));
+
+            chatBox.appendChild(bubble);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function askBrain() {
+            const question = questionInput.value.trim();
+
+            if (!question || !pyodide || !brainReady) {
+                return;
+            }
+
+            addMessage("You", question, true);
+            questionInput.value = "";
+
+            try {
+                const answerFunction = pyodide.globals.get("answer");
+
+                try {
+                    const result = answerFunction(question);
+
+                    addMessage(
+                        "MyAIBrain",
+                        String(result),
+                        false
+                    );
+
+                } finally {
+                    answerFunction.destroy();
+                }
+
+            } catch (error) {
+                addMessage(
+                    "Error",
+                    "Your AI could not answer because of a Python error: " +
+                    String(error),
+                    false
+                );
+            }
+
+            questionInput.focus();
+        }
+
+        function resetBrain() {
+            brainCode.value = originalCode;
+            brainReady = false;
+            askButton.disabled = true;
+
+            brainOutput.textContent =
+                "Code reset. Click Run AI Brain to load the original chatbot.";
+
+        }
+
+        function clearChat() {
+            chatBox.replaceChildren();
+
+            addMessage(
+                "MyAIBrain",
+                brainReady
+                    ? "Chat cleared! Ask me another question."
+                    : "Chat cleared! Run your Python brain first.",
+                false
+            );
+        }
+
+        questionInput.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                askBrain();
+            }
+        });
+
+        initializePython();
+    </script>
+
+</body>
+</html>

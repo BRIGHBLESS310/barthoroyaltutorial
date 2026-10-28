@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Tutorial - Build an AI Brain</title>
+
+    <link rel="stylesheet"
+          href="https://www.w3schools.com/w3css/6/w3.css">
+</head>
+
+<body>
+
+    <!-- Welcome Section -->
+    <header class="w3-container w3-green w3-center w3-padding-32">
+        <h1>Welcome to the Next Step!</h1>
+        <p>Enjoy your journey into the world of AI!</p>
+        <a href="#lessons"
+           class="w3-button w3-white w3-round">
+            Start Learning
+        </a>
+    </header>
+
+    <!-- Introduction -->
+    <section class="w3-container w3-padding-32">
+        <h2>Let's Build an AI Brain!</h2>
+
+        <p>
+            Let's move on to making our AI more advanced by learning
+            about neural networks, tokenizers, and text generation.
+        </p>
+
+        <p>
+            Our goal is to understand how these components work together
+            to create MyAIBrain.
+        </p>
+    </section>
+
+    <!-- Lessons -->
+    <section id="lessons" class="w3-container w3-light-grey w3-padding-32">
+        <h2 class="w3-center">Core AI Lessons</h2>
+
+        <div class="w3-row-padding">
+
+            <div class="w3-third w3-margin-bottom">
+                <div class="w3-card w3-white w3-padding">
+                    <h3>1. Tokenizer</h3>
+                    <p>
+                        A tokenizer converts text into smaller units
+                        called tokens. A model can then process their
+                        numerical IDs.
+                    </p>
+
+                    <button class="w3-button w3-green"
+                            onclick="showLesson('tokenizer')">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+
+            <div class="w3-third w3-margin-bottom">
+                <div class="w3-card w3-white w3-padding">
+                    <h3>2. Neural Network</h3>
+                    <p>
+                        A neural network learns patterns by adjusting
+                        numerical weights during training.
+                    </p>
+
+                    <button class="w3-button w3-green"
+                            onclick="showLesson('network')">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+
+            <div class="w3-third w3-margin-bottom">
+                <div class="w3-card w3-white w3-padding">
+                    <h3>3. Text Generation</h3>
+                    <p>
+                        A language model predicts likely next tokens
+                        to generate text one step at a time.
+                    </p>
+
+                    <button class="w3-button w3-green"
+                            onclick="showLesson('generation')">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Lesson Details -->
+    <section class="w3-container w3-padding-32">
+        <h2>Lesson Explanation</h2>
+
+        <div id="lessonContent" class="w3-panel w3-pale-green w3-leftbar w3-border-green">
+            Select a lesson above to learn more.
+        </div>
+    </section>
+
+    <!-- Tokenizer Demonstration -->
+    <section class="w3-container w3-padding-32">
+        <h2>Try a Simple Tokenizer</h2>
+
+        <p>Enter a sentence to see how it can be split into words.</p>
+
+        <label for="userText">Your sentence:</label>
+
+        <input class="w3-input w3-border"
+               type="text"
+               id="userText"
+               placeholder="Example: My AI brain is learning">
+
+        <button class="w3-button w3-green w3-margin-top"
+                onclick="tokenizeText()">
+            Tokenize Text
+        </button>
+
+        <h3>Tokens</h3>
+        <div id="tokenOutput" class="w3-panel w3-light-grey w3-padding">
+            Your tokens will appear here.
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w3-container w3-green w3-center w3-padding-16">
+        <p>MyAIBrain | Learn AI Step by Step</p>
+    </footer>
+
+    <script>
+        function showLesson(lesson) {
+            const content = document.getElementById("lessonContent");
+
+            if (lesson === "tokenizer") {
+                content.innerHTML = `
+                    <h3>What is a Tokenizer?</h3>
+                    <p>
+                        A tokenizer splits text into tokens and maps
+                        them to numerical IDs that a model can process.
+                    </p>
+                    <p>
+                        Example: "AI learns fast" could become three
+                        word tokens in a simple word-based tokenizer.
+                        Real tokenizers may split words into smaller pieces.
+                    </p>
+                `;
+            }
+
+            else if (lesson === "network") {
+                content.innerHTML = `
+                    <h3>What is a Neural Network?</h3>
+                    <p>
+                        A neural network contains layers of mathematical
+                        operations with adjustable weights.
+                    </p>
+                    <p>
+                        During training, it compares predictions with
+                        target answers and adjusts its weights to reduce
+                        the error.
+                    </p>
+                `;
+            }
+
+            else if (lesson === "generation") {
+                content.innerHTML = `
+                    <h3>How Does Text Generation Work?</h3>
+                    <p>
+                        A language model uses previous tokens to predict
+                        a distribution over possible next tokens.
+                    </p>
+                    <p>
+                        The chosen token is added to the text, and the
+                        process repeats until generation stops.
+                    </p>
+                `;
+            }
+        }
+
+        function tokenizeText() {
+            const text = document.getElementById("userText").value.trim();
+            const output = document.getElementById("tokenOutput");
+
+            if (text === "") {
+                output.textContent = "Please enter some text first.";
+                return;
+            }
+
+            const tokens = text.split(/\s+/);
+
+            output.replaceChildren();
+
+            tokens.forEach(function(token, index) {
+                const item = document.createElement("span");
+
+                item.className = "w3-tag w3-green w3-margin-right w3-margin-bottom";
+                item.textContent = index + ": " + token;
+
+                output.appendChild(item);
+            });
+
+            const count = document.createElement("p");
+            count.textContent = "Total word tokens: " + tokens.length;
+            output.appendChild(count);
+        }
+    </script>
+
+</body>
+</html>

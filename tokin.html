@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Build a Tokenizer - MyAIBrain</title>
+
+    <link rel="stylesheet"
+          href="https://www.w3schools.com/w3css/6/w3.css">
+
+    <style>
+        .lesson-box {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        .output {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            min-height: 55px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        code {
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body class="w3-light-grey">
+
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-bar-block w3-black"
+         style="width:200px">
+    <!-- Main Content -->
+    <main class="w3-main" style="margin-left:200px">
+
+        <header class="w3-container w3-blue">
+            <h1>Build Your Own Tokenizer</h1>
+            <p>Learn how AI turns text into numbers.</p>
+        </header>
+
+        <div class="w3-container w3-white w3-padding-32">
+
+            <h2>1. What is a tokenizer?</h2>
+
+            <p>
+                A tokenizer is a program that breaks text into tokens
+                and converts those tokens into numerical IDs.
+                Neural networks use these numbers as input.
+            </p>
+
+            <p>For example:</p>
+
+            <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <p><b>Text:</b> My AI learns!</p>
+                <p><b>Tokens:</b> my | ai | learns | !</p>
+                <p><b>IDs:</b> 2 | 3 | 4 | 5</p>
+            </div>
+
+            <p>
+                These IDs are only an illustration. The actual IDs
+                depend on the vocabulary built by the tokenizer.
+                The numbers themselves do not contain the meaning
+                of the words.
+            </p>
+
+            <h2>2. How does a tokenizer work?</h2>
+
+            <ol>
+                <li>
+                    <b>Normalize:</b> Clean or standardize the text.
+                    This example converts text to lowercase.
+                </li>
+                <li>
+                    <b>Split:</b> Separate words and punctuation.
+                </li>
+                <li>
+                    <b>Build vocabulary:</b> Give each known token
+                    a unique number.
+                </li>
+                <li>
+                    <b>Encode:</b> Replace tokens with their IDs.
+                </li>
+                <li>
+                    <b>Decode:</b> Convert IDs back into tokens
+                    and reconstruct the text.
+                </li>
+            </ol>
+
+            <h2>3. Try It Yourself</h2>
+
+            <p>
+                First, build a vocabulary from the training text.
+                Then enter a sentence to see its tokens and IDs.
+                You can edit both text areas and experiment.
+            </p>
+
+            <label for="trainingText">
+                <b>Training text — used to build the vocabulary</b>
+            </label>
+
+            <textarea id="trainingText"
+                      class="w3-input w3-border"
+                      rows="5">My AI learns from text.
+AI can learn patterns.
+My brain builds an AI.
+Text helps the brain learn.</textarea>
+
+            <button class="w3-button w3-blue w3-margin-top"
+                    onclick="buildTokenizer()">
+                Build Vocabulary
+            </button>
+
+            <div class="lesson-box w3-pale-blue">
+                <b>Vocabulary status</b>
+                <p id="vocabStatus" aria-live="polite">
+                    Build your vocabulary to begin.
+                </p>
+                <pre id="vocabOutput" class="output"></pre>
+            </div>
+
+            <label for="inputText">
+                <b>Text to tokenize</b>
+            </label>
+
+            <textarea id="inputText"
+                      class="w3-input w3-border"
+                      rows="3">My AI can learn!</textarea>
+
+            <button class="w3-button w3-green w3-margin-top"
+                    onclick="encodeText()">
+                Tokenize and Encode
+            </button>
+
+            <h3>Step A: Tokens</h3>
+            <div id="tokensOutput"
+                 class="lesson-box w3-pale-green output"
+                 aria-live="polite">Your tokens will appear here.</div>
+
+            <h3>Step B: Token IDs</h3>
+            <div id="idsOutput"
+                 class="lesson-box w3-pale-yellow output">Your IDs will appear here.</div>
+
+            <h3>Step C: Decode the IDs</h3>
+
+            <p>
+                You can also edit the ID list. Try removing an ID
+                or changing one to see what text it represents.
+            </p>
+
+            <label for="idsInput"><b>Token IDs (comma-separated)</b></label>
+            <textarea id="idsInput"
+                      class="w3-input w3-border"
+                      rows="2"
+                      placeholder="Build the vocabulary and encode some text first."></textarea>
+
+            <button class="w3-button w3-dark-grey w3-margin-top"
+                    onclick="decodeText()">
+                Decode IDs
+            </button>
+
+            <div id="decodedOutput"
+                 class="lesson-box w3-pale-blue output"
+                 aria-live="polite">Decoded text will appear here.</div>
+
+            <button class="w3-button w3-grey w3-margin-top"
+                    onclick="resetDemo()">
+                Reset Example
+            </button>
+
+            <h2>4. Understand the code</h2>
+
+            <h4>The vocabulary</h4>
+            <p>
+                A vocabulary is a collection of known tokens.
+                Each token gets a unique ID. This example reserves
+                ID 0 for padding and ID 1 for unknown tokens.
+            </p>
+
+            <h4>Token splitting</h4>
+            <p>
+                The program separates words and punctuation.
+                For example, "learn!" becomes "learn" and "!".
+                It converts everything to lowercase, so the original
+                capitalization is not preserved.
+            </p>
+
+            <h4>Encoding</h4>
+            <p>
+                Encoding looks up each token in the vocabulary and
+                returns its number. If a token is not in the vocabulary,
+                it receives the unknown-token ID.
+            </p>
+
+            <h4>Decoding</h4>
+            <p>
+                Decoding looks up each number and converts it back
+                to a token. A real tokenizer has additional rules
+                to reconstruct spaces, punctuation, and subword pieces.
+            </p>
+
+            <h2>5. What are unknown tokens?</h2>
+
+            <p>
+                If you type a word that was not in the training text,
+                this simple tokenizer uses the special token
+                <code>[UNK]</code>. For example, try adding a new word
+                to your input without adding it to the training text.
+            </p>
+
+            <p>
+                Modern subword tokenizers can often represent unfamiliar
+                words as smaller pieces instead of replacing the whole
+                word with one unknown token.
+            </p>
+
+            <h2>6. Is this the tokenizer used by ChatGPT?</h2>
+
+            <p>
+                No. This is a beginner's word-level tokenizer.
+                Modern language models generally use more sophisticated
+                tokenization algorithms, often based on subwords.
+            </p>
+
+            <p>
+                The important idea is the same: convert text into
+                token IDs that match the model's vocabulary.
+                During generation, the model produces token IDs
+                that are converted back into text.
+            </p>
+
+            <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <b>Next step for MyAIBrain:</b>
+                Save a tokenizer vocabulary in Python, encode your
+                training text, and feed those IDs into a PyTorch
+                neural language model. The tokenizer and model must
+                use the same vocabulary and ID assignments.
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        let vocabulary = {};
+        let reverseVocabulary = {};
+        let tokenizerReady = false;
+
+        const UNK = 1;
+        const PAD = 0;
+
+        function splitTokens(text) {
+            // Convert to lowercase and split words from punctuation.
+            return text.toLowerCase().match(
+                /[\p{L}\p{N}_]+|[^\s\p{L}\p{N}_]/gu
+            ) || [];
+        }
+
+        function buildTokenizer() {
+            const trainingText =
+                document.getElementById("trainingText").value;
+
+            const tokens = splitTokens(trainingText);
+
+            vocabulary = {
+                "[PAD]": PAD,
+                "[UNK]": UNK
+            };
+
+            // Assign a unique ID to every new token.
+            for (const token of tokens) {
+                if (!(token in vocabulary)) {
+                    vocabulary[token] = Object.keys(vocabulary).length;
+                }
+            }
+
+            reverseVocabulary = {};
+
+            for (const [token, id] of Object.entries(vocabulary)) {
+                reverseVocabulary[id] = token;
+            }
+
+            tokenizerReady = true;
+
+            document.getElementById("vocabStatus").textContent =
+                "Vocabulary built successfully. " +
+                (Object.keys(vocabulary).length - 2) +
+                " ordinary tokens, plus 2 special tokens.";
+
+            document.getElementById("vocabOutput").textContent =
+                JSON.stringify(vocabulary, null, 2);
+
+            document.getElementById("tokensOutput").textContent =
+                "Click Tokenize and Encode to process your sentence.";
+
+            document.getElementById("idsOutput").textContent = "";
+            document.getElementById("idsInput").value = "";
+            document.getElementById("decodedOutput").textContent = "";
+        }
+
+        function encodeText() {
+            if (!tokenizerReady) {
+                document.getElementById("tokensOutput").textContent =
+                    "Please build the vocabulary first.";
+                return;
+            }
+
+            const text = document.getElementById("inputText").value;
+            const tokens = splitTokens(text);
+
+            const ids = tokens.map(token =>
+                Object.prototype.hasOwnProperty.call(vocabulary, token)
+                    ? vocabulary[token]
+                    : UNK
+            );
+
+            document.getElementById("tokensOutput").textContent =
+                JSON.stringify(tokens, null, 2);
+
+            document.getElementById("idsOutput").textContent =
+                JSON.stringify(ids);
+
+            document.getElementById("idsInput").value =
+                ids.join(", ");
+
+            document.getElementById("decodedOutput").textContent =
+                "Click Decode IDs to reconstruct the text.";
+        }
+
+        function decodeText() {
+            if (!tokenizerReady) {
+                document.getElementById("decodedOutput").textContent =
+                    "Please build the vocabulary first.";
+                return;
+            }
+
+            const rawIds = document.getElementById("idsInput").value.trim();
+
+            if (!rawIds) {
+                document.getElementById("decodedOutput").textContent =
+                    "Enter some token IDs first.";
+                return;
+            }
+
+            const parts = rawIds.split(",");
+
+            const ids = parts.map(part => Number(part.trim()));
+
+            if (ids.some(id =>
+                !Number.isInteger(id) ||
+                !Object.prototype.hasOwnProperty.call(reverseVocabulary, id)
+            )) {
+                document.getElementById("decodedOutput").textContent =
+                    "Invalid ID. Use whole numbers from the displayed vocabulary.";
+                return;
+            }
+
+            const tokens = ids
+                .map(id => reverseVocabulary[id])
+                .filter(token => token !== "[PAD]")
+                .map(token => token === "[UNK]" ? "[UNK]" : token);
+
+            let text = "";
+
+            for (const token of tokens) {
+                if (/^[.,!?;:%)\]}]$/.test(token)) {
+                    text += token;
+                } else if (/^[(\[{]$/.test(token)) {
+                    text += (text ? " " : "") + token;
+                } else {
+                    text += (text ? " " : "") + token;
+                }
+            }
+
+            document.getElementById("decodedOutput").textContent = text;
+        }
+
+        function resetDemo() {
+            document.getElementById("trainingText").value =
+                "My AI learns from text.\n" +
+                "AI can learn patterns.\n" +
+                "My brain builds an AI.\n" +
+                "Text helps the brain learn.";
+
+            document.getElementById("inputText").value =
+                "My AI can learn!";
+
+            vocabulary = {};
+            reverseVocabulary = {};
+            tokenizerReady = false;
+
+            document.getElementById("vocabStatus").textContent =
+                "Build your vocabulary to begin.";
+
+            document.getElementById("vocabOutput").textContent = "";
+            document.getElementById("tokensOutput").textContent =
+                "Your tokens will appear here.";
+            document.getElementById("idsOutput").textContent =
+                "Your IDs will appear here.";
+            document.getElementById("idsInput").value = "";
+            document.getElementById("decodedOutput").textContent =
+                "Decoded text will appear here.";
+        }
+    </script>
+
+</body>
+</html>

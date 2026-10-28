@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Build a Real AI - MyAIBrain</title>
+    <link rel="stylesheet"
+          href="https://www.w3schools.com/w3css/6/w3.css">
+    <style>
+        pre {
+            overflow-x: auto;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+        .lesson-code {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body class="w3-light-grey">
+    <main class="w3-main" style="margin-left:200px">
+
+        <header class="w3-container w3-blue">
+            <h1>Build a Real AI From Scratch</h1>
+            <p>Learn how to create, train, and use your own neural network.</p>
+        </header>
+
+        <div class="w3-container w3-white w3-padding-32">
+
+            <h2>Welcome to the real AI course</h2>
+
+            <p>
+                In this course, we will build MyAIBrain step by step.
+                We will write our own tokenizer, neural network,
+                training loop, and text generator using Python and PyTorch.
+            </p>
+
+            <p>
+                We will begin with a tiny model so beginners can understand
+                how learning works before moving on to a Transformer.
+            </p>
+
+            <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <b>Important:</b> This first model will learn only simple
+                patterns from a small text file. It will not immediately
+                have the knowledge or abilities of ChatGPT.
+            </div>
+
+            <h2>Our learning plan</h2>
+
+            <ol>
+                <li>Prepare training text.</li>
+                <li>Convert characters into token IDs.</li>
+                <li>Create a neural network with PyTorch.</li>
+                <li>Train it by minimizing prediction errors.</li>
+                <li>Generate text using its learned weights.</li>
+                <li>Upgrade the model to use a Transformer.</li>
+            </ol>
+
+            <h2>Lesson 1: Prepare your computer</h2>
+
+            <p>
+                We will run the actual AI in Python on your computer.
+                The website explains the code, while Python and PyTorch
+                do the model training.
+            </p>
+
+            <h3>Step 1: Open your project</h3>
+
+            <p>
+                Open your existing MyAIBrain folder in VS Code.
+                Do not delete your existing checkpoints or replace your
+                current model files. We will use a separate folder for
+                this new experiment.
+            </p>
+
+            <h3>Step 2: Open the VS Code terminal</h3>
+
+            <p>
+                Select Terminal, then New Terminal. Enter these commands
+                in PowerShell from your MyAIBrain project folder:
+            </p>
+
+            <pre class="lesson-code">mkdir real_ai_course
+cd real_ai_course
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install torch</pre>
+
+            <p>
+                If PowerShell blocks activation, use the Python executable
+                directly with <code>.\.venv\Scripts\python.exe</code>.
+                You can then install PyTorch using that executable.
+            </p>
+
+            <p>
+                Keep your existing project environment unchanged.
+                Installing PyTorch in this new environment keeps the
+                experiment separate from your earlier work.
+            </p>
+
+            <h3>Step 3: Check PyTorch</h3>
+
+            <p>
+                Create a file named <code>check_torch.py</code> in the
+                new folder and add:
+            </p>
+
+            <pre class="lesson-code">import torch
+
+print("PyTorch version:", torch.__version__)
+print("AI training device: CPU")
+print("PyTorch is ready!")</pre>
+
+            <p>Run it from the terminal:</p>
+
+            <pre class="lesson-code">python check_torch.py</pre>
+
+            <p>
+                If you see the PyTorch version and "PyTorch is ready!",
+                your environment is ready for the next lesson.
+            </p>
+
+            <h2>Try It Yourself</h2>
+
+            <p>
+                This small browser exercise demonstrates the basic
+                training idea: compare a prediction with the correct
+                answer, calculate the error, and adjust a number to
+                reduce that error.
+            </p>
+
+            <p>
+                It is a learning illustration, not the full PyTorch
+                language model. We will train the actual neural network
+                on your computer in the next coding step.
+            </p>
+
+            <label for="weight"><b>Model's current weight</b></label>
+            <input id="weight" class="w3-input w3-border"
+                   type="number" value="0" step="0.1">
+
+            <label for="target"><b>Correct answer</b></label>
+            <input id="target" class="w3-input w3-border"
+                   type="number" value="1" step="0.1">
+
+            <button class="w3-button w3-green w3-margin-top"
+                    onclick="trainStep()">
+                Perform One Learning Step
+            </button>
+
+            <button class="w3-button w3-dark-grey w3-margin-top"
+                    onclick="resetDemo()">
+                Reset
+            </button>
+
+            <div id="result" class="w3-panel w3-pale-yellow"
+                 aria-live="polite">
+                Change the values and perform a learning step.
+            </div>
+
+            <h3>What did you learn?</h3>
+
+            <p>
+                A trainable neural network uses a loss function to measure
+                prediction error. An optimizer uses gradients to adjust
+                the network's weights so that the loss can decrease.
+                Real training repeats this process across many examples.
+            </p>
+
+            <h2>What comes next?</h2>
+
+            <p>
+                In Lesson 2, we will create our own tokenizer and use it
+                to convert training text into numbers. Then we will use
+                those numbers to train a small neural language model.
+            </p>
+
+        </div>
+    </main>
+
+    <script>
+        function trainStep() {
+            const weightInput = document.getElementById("weight");
+            const targetInput = document.getElementById("target");
+            const result = document.getElementById("result");
+
+            let weight = Number(weightInput.value);
+            const target = Number(targetInput.value);
+
+            if (!Number.isFinite(weight) || !Number.isFinite(target)) {
+                result.textContent = "Enter valid numbers.";
+                return;
+            }
+
+            const prediction = weight;
+            const error = target - prediction;
+            const learningRate = 0.1;
+
+            weight = weight + learningRate * error;
+            weightInput.value = weight.toFixed(4);
+
+            result.textContent =
+                "Prediction before update: " + prediction.toFixed(4) +
+                "\nCorrect answer: " + target.toFixed(4) +
+                "\nError: " + error.toFixed(4) +
+                "\nUpdated weight: " + weight.toFixed(4) +
+                "\n\nRun another step to see the weight move closer " +
+                "to the target.";
+        }
+
+        function resetDemo() {
+            document.getElementById("weight").value = 0;
+            document.getElementById("target").value = 1;
+            document.getElementById("result").textContent =
+                "Change the values and perform a learning step.";
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How Large Language Models Work - MyAIBrain</title>
+
+    <link rel="stylesheet"
+          href="https://www.w3schools.com/w3css/6/w3.css">
+
+    <style>
+        .chat-box {
+            height: 350px;
+            overflow-y: auto;
+            background: #f5f7fa;
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        .message {
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .user-message {
+            background: #dcecff;
+            margin-left: 12%;
+        }
+
+        .ai-message {
+            background: white;
+            border: 1px solid #ddd;
+            margin-right: 8%;
+        }
+
+        .status {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body class="w3-light-grey">
+
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-bar-block w3-black"
+         style="width:200px">
+
+        <h3 class="w3-bar-item">MyAIBrain</h3>
+
+        <a href="index.html" class="w3-bar-item w3-button">
+            Home
+        </a>
+
+        <a href="brain.html" class="w3-bar-item w3-button">
+            AI Brain
+        </a>
+
+        <a href="crawler.html" class="w3-bar-item w3-button">
+            Web Crawler
+        </a>
+
+        <a href="text_generation.html" class="w3-bar-item w3-button">
+            Text Generation
+        </a>
+
+        <a href="llm_try_it.html"
+           class="w3-bar-item w3-button w3-blue">
+            Large Language Model
+        </a>
+    </div>
+
+    <!-- Main content -->
+    <main class="w3-main" style="margin-left:200px">
+
+        <header class="w3-container w3-blue">
+            <h1>Large Language Models</h1>
+            <p>Learn how real AI language models generate responses.</p>
+        </header>
+
+        <div class="w3-container w3-white w3-padding-32">
+
+            <h2>1. What is a Large Language Model?</h2>
+
+            <p>
+                A Large Language Model, or LLM, is a neural network
+                trained on text so that it learns patterns in language
+                and can generate new text.
+            </p>
+
+            <p>
+                LLMs can answer questions, explain concepts, write
+                stories, summarize information, and help with code.
+                Their answers are generated using patterns learned
+                during training.
+            </p>
+
+            <h2>2. How does an LLM work?</h2>
+
+            <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <p><b>Step 1: Input</b></p>
+                <p>You type a message into the chat box.</p>
+
+                <p><b>Step 2: Tokenizer</b></p>
+                <p>The tokenizer converts your text into token IDs.</p>
+
+                <p><b>Step 3: Transformer</b></p>
+                <p>
+                    The neural network processes those tokens.
+                    Attention helps it use relationships between
+                    words and other tokens in the context.
+                </p>
+
+                <p><b>Step 4: Next-token prediction</b></p>
+                <p>
+                    The model calculates scores for possible next
+                    tokens and selects one according to its
+                    generation settings.
+                </p>
+
+                <p><b>Step 5: Repeat</b></p>
+                <p>
+                    The new token is added to the output, and the
+                    model predicts another token until it finishes.
+                </p>
+            </div>
+
+            <h2>3. Try a real pretrained model</h2>
+
+            <p>
+                This demonstration loads Qwen2.5-0.5B-Instruct,
+                a small pretrained language model prepared for
+                browser inference.
+            </p>
+
+            <div class="w3-panel w3-pale-yellow w3-leftbar w3-border-yellow">
+                <b>Before you start:</b>
+                An internet connection is needed to download the
+                model the first time. The model download is large
+                and may take several minutes. Your browser may use
+                substantial memory while it runs.
+            </div>
+
+            <button id="loadButton"
+                    class="w3-button w3-blue w3-round"
+                    onclick="loadModel()">
+                Load AI Model
+            </button>
+
+            <p id="status"
+               class="status w3-text-grey w3-margin-top">
+                Model not loaded yet.
+            </p>
+
+            <h3>AI Chat</h3>
+
+            <div id="chatBox" class="chat-box">
+                <div class="message ai-message">
+                    Hello! Load the model, then ask me a question.
+                </div>
+            </div>
+
+            <label for="prompt"><b>Your message</b></label>
+
+            <textarea id="prompt"
+                      class="w3-input w3-border"
+                      rows="3"
+                      placeholder="Example: Explain neural networks to a beginner."></textarea>
+
+            <div class="w3-margin-top">
+                <button id="sendButton"
+                        class="w3-button w3-green w3-round"
+                        onclick="sendMessage()"
+                        disabled>
+                    Send Message
+                </button>
+
+                <button class="w3-button w3-dark-grey w3-round"
+                        onclick="clearChat()">
+                    Clear Chat
+                </button>
+            </div>
+
+            <h2>4. Understand the code</h2>
+
+            <h4>The model loader</h4>
+            <p>
+                The JavaScript code downloads the Transformers.js
+                library and loads a pretrained model. The model has
+                already learned patterns during its original training.
+            </p>
+
+            <h4>The tokenizer</h4>
+            <p>
+                The model's tokenizer converts your message into
+                the token format expected by the neural network.
+                It also helps convert generated tokens back into text.
+            </p>
+
+            <h4>The generation settings</h4>
+            <p>
+                The program limits how many new tokens the model
+                generates. This helps keep the response and processing
+                time manageable.
+            </p>
+
+            <h4>Does it learn from this chat?</h4>
+            <p>
+                No. This demo uses a pretrained model to generate
+                answers. Chatting does not automatically retrain its
+                weights or permanently teach it new knowledge.
+            </p>
+
+            <h2>5. How this helps MyAIBrain</h2>
+
+            <p>
+                You now have an example of how a real pretrained
+                language model can run in a browser. Building your
+                own model from scratch is a separate process:
+                you create a tokenizer, build a Transformer,
+                prepare training text, train the network, save its
+                weights, and implement text generation.
+            </p>
+
+            <p>
+                You can study this working browser demo before
+                developing a smaller model for your own project.
+            </p>
+
+            <p>
+                Model information:
+                <a href="https://huggingface.co/onnx-community/Qwen2.5-0.5B-Instruct"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Qwen2.5-0.5B-Instruct model page
+                </a>
+            </p>
+
+        </div>
+    </main>
+
+    <script type="module">
+        import { pipeline } from
+            "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1";
+
+        let generator = null;
+        let loading = false;
+        let generating = false;
+        let history = [];
+
+        const status = document.getElementById("status");
+        const loadButton = document.getElementById("loadButton");
+        const sendButton = document.getElementById("sendButton");
+        const promptBox = document.getElementById("prompt");
+        const chatBox = document.getElementById("chatBox");
+
+        function addMessage(role, content) {
+            const message = document.createElement("div");
+            message.className = "message " +
+                (role === "user" ? "user-message" : "ai-message");
+
+            message.textContent =
+                (role === "user" ? "You: " : "AI: ") + content;
+
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        window.loadModel = async function () {
+            if (generator || loading) return;
+
+            loading = true;
+            loadButton.disabled = true;
+            status.textContent =
+                "Loading the AI library and model. The first download may be large. Please wait.";
+
+            try {
+                generator = await pipeline(
+                    "text-generation",
+                    "onnx-community/Qwen2.5-0.5B-Instruct",
+                    {
+                        dtype: "q4"
+                    }
+                );
+
+                status.textContent =
+                    "Model loaded successfully. You can now chat with it.";
+
+                sendButton.disabled = false;
+                loadButton.textContent = "Model Loaded";
+            } catch (error) {
+                generator = null;
+                status.textContent =
+                    "Could not load the model.\n" +
+                    String(error) +
+                    "\nCheck your internet connection, then try again.";
+
+                loadButton.disabled = false;
+            } finally {
+                loading = false;
+            }
+        };
+
+        window.sendMessage = async function () {
+            const prompt = promptBox.value.trim();
+
+            if (!generator) {
+                status.textContent = "Please load the model first.";
+                return;
+            }
+
+            if (!prompt || generating) return;
+
+            generating = true;
+            sendButton.disabled = true;
+            promptBox.value = "";
+
+            addMessage("user", prompt);
+            status.textContent = "The model is generating a response...";
+
+            const updatedHistory = [
+                ...history,
+                { role: "user", content: prompt }
+            ];
+
+            try {
+                const result = await generator(updatedHistory, {
+                    max_new_tokens: 120,
+                    temperature: 0.7,
+                    do_sample: true
+                });
+
+                const generated = result[0].generated_text;
+                let answer = "";
+
+                if (Array.isArray(generated)) {
+                    const lastMessage = generated[generated.length - 1];
+                    answer = lastMessage.content || "";
+                } else {
+                    answer = String(generated);
+                }
+
+                if (!answer) {
+                    answer = "The model returned no text. Please try again.";
+                }
+
+                addMessage("assistant", answer);
+
+                history = [
+                    ...updatedHistory,
+                    { role: "assistant", content: answer }
+                ];
+
+                // Keep the conversation short to limit memory use.
+                if (history.length > 8) {
+                    history = history.slice(-8);
+                }
+
+                status.textContent = "Response complete.";
+            } catch (error) {
+                status.textContent =
+                    "Generation failed:\n" + String(error);
+            } finally {
+                generating = false;
+                sendButton.disabled = !generator;
+                promptBox.focus();
+            }
+        };
+
+        window.clearChat = function () {
+            history = [];
+            chatBox.replaceChildren();
+
+            addMessage(
+                "assistant",
+                "Chat cleared. Ask a new question whenever you are ready."
+            );
+
+            status.textContent = generator
+                ? "Model is ready."
+                : "Load the model to start chatting.";
+        };
+
+        promptBox.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                window.sendMessage();
+            }
+        });
+    </script>
+
+</body>
+</html>
